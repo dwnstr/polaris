@@ -104,7 +104,7 @@ module.exports = {
       // send the embed
       await interaction.reply({
         embeds: [embed],
-        ephemeral: target && target.id !== user.id,
+        ephemeral: !target || target.id == user.id,
       });
     }
   },
