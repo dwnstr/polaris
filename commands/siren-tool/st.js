@@ -6,12 +6,6 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("st")
     .setDescription("Access various Siren Tool related functions.")
-    .addUserOption((option) =>
-      option
-        .setName("target")
-        .setDescription("Optional user to target.")
-        .setRequired(false)
-    )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("role")
@@ -21,6 +15,12 @@ module.exports = {
       subcommand
         .setName("update")
         .setDescription("Instructions for updating Siren Tool")
+        .addUserOption((option) =>
+          option
+            .setName("target")
+            .setDescription("Optional user to target.")
+            .setRequired(false)
+        )
     ),
   async execute(interaction) {
     const target = interaction.options.getUser("target");
