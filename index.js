@@ -5,7 +5,7 @@ const { token, SUPABASE_KEY } = require("./config.json");
 
 const { createClient } = require("@supabase/supabase-js");
 
-const supabaseUrl = "https://rcnasujhimvbwwpsvybp.supabase.co";
+const supabaseUrl = SUPABASE_URL;
 const supabaseKey = SUPABASE_KEY;
 global.supabase = createClient(supabaseUrl, supabaseKey);
 
