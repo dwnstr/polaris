@@ -1,13 +1,10 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
-const { token, SUPABASE_KEY } = require("./config.json");
+const { token, SUPABASE_URL, SUPABASE_KEY } = require("./config.json");
 
 const { createClient } = require("@supabase/supabase-js");
-
-const supabaseUrl = SUPABASE_URL;
-const supabaseKey = SUPABASE_KEY;
-global.supabase = createClient(supabaseUrl, supabaseKey);
+global.supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Create a new client instance
 global.client = new Client({
