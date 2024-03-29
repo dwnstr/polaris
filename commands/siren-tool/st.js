@@ -27,7 +27,16 @@ module.exports = {
     const user = interaction.member.user;
     if (interaction.options.getSubcommand() === "role") {
       console.log(`${interaction.member.displayName} running /st role.`);
-      console.log();
+
+      const hasRole = interaction.member.roles.cache.has("603592216266539018");
+
+      if (hasRole) {
+        await interaction.reply({
+          content: `You already have the ST Owner role!`,
+          ephemeral: true,
+        });
+      }
+
       // check if there is at least one row in sirenToolOwners with discord_id matching user.id
       const { data, error } = await supabase
         .from("sirenToolOwners")
