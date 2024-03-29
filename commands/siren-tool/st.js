@@ -26,7 +26,7 @@ module.exports = {
     const target = interaction.options.getUser("target");
     const user = interaction.member.user;
     if (interaction.options.getSubcommand() === "role") {
-      console.log(`${interaction.member.displayName} running /st role.`);
+      console.log(`${interaction.member.username} running /st role.`);
 
       const hasRole = interaction.member.roles.cache.has("603592216266539018");
 
@@ -55,7 +55,7 @@ module.exports = {
       if (data.length === 0) {
         // if there is no row in sirenToolOwners with discord_id matching user.id
         return interaction.reply({
-          content: `You do not have a Siren Tool account linked to your Discord account.`,
+          content: `You do not have a Siren Tool account linked to your Discord account. Make sure you signed up on dwnstr.com and imported your Siren Tool keys!`,
           ephemeral: true,
         });
       }
@@ -76,7 +76,7 @@ module.exports = {
           });
         });
     } else if (interaction.options.getSubcommand() === "update") {
-      console.log(`${interaction.member.displayName} running /st update.`);
+      console.log(`${interaction.member.username} running /st update.`);
       console.log("Fetching Siren Tool metadata...");
 
       const sirenToolMetaResult = await request(
