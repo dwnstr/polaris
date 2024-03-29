@@ -1,0 +1,15 @@
+{
+  "name": "polaris",
+  "version": "1.0.0",
+  "description": "Dawnstar's Discord bot!",
+  "main": "index.js",
+  "repository": "https://github.com/dwnstr/polaris.git",
+  "author": "Flohhhhh <camgus322@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.41.1",
+    "discord.js": "^14.14.1",
+    "undici": "^6.10.2"
+  }
+}
