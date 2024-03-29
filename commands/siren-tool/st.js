@@ -31,7 +31,7 @@ module.exports = {
       const hasRole = interaction.member.roles.cache.has("603592216266539018");
 
       if (hasRole) {
-        await interaction.reply({
+        return await interaction.reply({
           content: `You already have the ST Owner role!`,
           ephemeral: true,
         });
