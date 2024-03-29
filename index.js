@@ -9,7 +9,15 @@ const supabaseUrl = "https://rcnasujhimvbwwpsvybp.supabase.co";
 const supabaseKey = SUPABASE_KEY;
 global.supabase = createClient(supabaseUrl, supabaseKey);
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+// Create a new client instance
+global.client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
+  ],
+});
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");
