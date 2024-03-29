@@ -5,7 +5,7 @@ module.exports = {
     .setName("uptime")
     .setDescription("Displays time since bot last started"),
   async execute(interaction) {
-    console.log(`${interaction.imember.user.username} running /uptime.`);
+    console.log(`${interaction.member.user.username} running /uptime.`);
     //console.log(client.uptime)
     const uptime = client.uptime;
     // const uptime = interaction.client.uptime();

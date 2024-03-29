@@ -17,7 +17,7 @@ module.exports = {
     const content = message.content;
     const guild = message.guild;
 
-    // console.log(`Message from ${imember.user.username} [${member}]: ${content}`)
+    // console.log(`Message from ${member.user.username} [${member}]: ${content}`)
 
     // LAST MESSAGE WINS
     // IF LAST MESSAGE WINS CHANNEL
