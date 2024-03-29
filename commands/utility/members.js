@@ -8,7 +8,7 @@ module.exports = {
     // interaction.guild is the object representing the Guild in which the command was run
     console.log(`${interaction.imember.user.username} running /members.`);
     await interaction.reply(
-      `${interaction.guild.name} has ${interaction.guild.memberCount} members.`
+      `${interaction.guild.name} has ${interaction.guild.memberCount} members!`
     );
   },
 };
