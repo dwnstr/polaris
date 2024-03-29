@@ -55,7 +55,7 @@ module.exports = {
       if (data.length === 0) {
         // if there is no row in sirenToolOwners with discord_id matching user.id
         return interaction.reply({
-          content: `You do not have a Siren Tool account linked to your Discord account. Make sure you signed up on dwnstr.com and imported your Siren Tool keys!`,
+          content: `You do not have a Siren Tool account linked to your Discord account. Make sure you signed up on https://www.dwnstr.com/ and imported your Siren Tool keys!`,
           ephemeral: true,
         });
       }
