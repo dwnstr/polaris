@@ -20,7 +20,7 @@ module.exports = {
     const options = interaction.options;
     const number = options.getInteger("number");
     console.log(
-      `${interaction.member.username} running /clear on ${number} messages.`
+      `${interaction.imember.user.username} running /clear on ${number} messages.`
     );
 
     const messagesToDelete = await clearChannel.messages.fetch({

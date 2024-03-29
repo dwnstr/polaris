@@ -26,7 +26,7 @@ module.exports = {
     const target = interaction.options.getUser("target");
     const user = interaction.member.user;
     if (interaction.options.getSubcommand() === "role") {
-      console.log(`${interaction.member.username} running /st role.`);
+      console.log(`${interaction.imember.user.username} running /st role.`);
 
       const hasRole = interaction.member.roles.cache.has("603592216266539018");
 
@@ -76,7 +76,7 @@ module.exports = {
           });
         });
     } else if (interaction.options.getSubcommand() === "update") {
-      console.log(`${interaction.member.username} running /st update.`);
+      console.log(`${interaction.imember.user.username} running /st update.`);
       console.log("Fetching Siren Tool metadata...");
 
       const sirenToolMetaResult = await request(

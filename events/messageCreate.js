@@ -17,12 +17,12 @@ module.exports = {
     const content = message.content;
     const guild = message.guild;
 
-    // console.log(`Message from ${member.username} [${member}]: ${content}`)
+    // console.log(`Message from ${imember.user.username} [${member}]: ${content}`)
 
     // LAST MESSAGE WINS
     // IF LAST MESSAGE WINS CHANNEL
     if (channelId === "1043375542977703976") {
-      console.log(`${guildMember.displayName} is the new winner!`);
+      console.log(`${guildMember.user.username} is the new winner!`);
       if (!!winningMember) {
         //console.log(`Removing winner role from ${guildMember.displayName}`)
         winningMember.roles.remove("1083964151723982969");
