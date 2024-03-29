@@ -26,6 +26,8 @@ module.exports = {
     const target = interaction.options.getUser("target");
     const user = interaction.member.user;
     if (interaction.subcommandName === "role") {
+      console.log(`${interaction.member.displayName} running /st role.`);
+      console.log();
       // check if there is at least one row in sirenToolOwners with discord_id matching user.id
       const { data, error } = await supabase
         .from("sirenToolOwners")
@@ -65,6 +67,7 @@ module.exports = {
           });
         });
     } else if (interaction.subcommandName === "update") {
+      console.log(`${interaction.member.displayName} running /st update.`);
       console.log("Fetching Siren Tool metadata...");
 
       const sirenToolMetaResult = await request(
