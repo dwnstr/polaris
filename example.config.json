@@ -1,4 +1,4 @@
 {
   "token": "your-token-goes-here",
-  "SUPABASE_KEY": "your-supabase-key-here"
+  "clientId": "your-client-id-here",
 }
