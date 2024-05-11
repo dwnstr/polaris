@@ -5,7 +5,6 @@ const { request } = require("undici");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("st")
-    .setDescription("Access various Siren Tool related functions.")
     .addSubcommand((subcommand) =>
       subcommand
         .setName("role")
@@ -21,7 +20,17 @@ module.exports = {
             .setDescription("Optional user to target.")
             .setRequired(false)
         )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("forgot")
+        .addSubcommand((subcommand) =>
+          subcommand
+            .setName("email")
+            .setDescription("Use if you forgot your Siren Tool email.")
+        )
     ),
+
   async execute(interaction) {
     const target = interaction.options.getUser("target");
     const user = interaction.member.user;
@@ -106,6 +115,39 @@ module.exports = {
         embeds: [embed],
         ephemeral: !target || target.id == user.id,
       });
+    } else if (interaction.options.getSubcommand() === "forgot") {
+      console.log(
+        `${interaction.member.user.username} running /st forgot email.`
+      );
+
+      const { data, error } = await supabase
+        .from("sirenToolOwners")
+        .select("email")
+        .eq("discord_id", user.id)
+        .limit(1);
+
+      if (error) {
+        console.error("Error finding email by Discord ID", error);
+        return interaction.reply({
+          content: `Error fetching data: ${error.message}`,
+          ephemeral: true,
+        });
+      }
+
+      if (data.length === 0) {
+        return interaction.reply({
+          content: `Couldn't find a Siren Tool email linked to your Discord account.`,
+          ephemeral: true,
+        });
+      }
+
+      if (data.length > 0) {
+        const email = data[0].email;
+        return interaction.reply({
+          content: `Your Siren Tool email is: ${email}`,
+          ephemeral: true,
+        });
+      }
     }
   },
 };
