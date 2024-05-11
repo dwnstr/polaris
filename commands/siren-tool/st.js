@@ -5,6 +5,7 @@ const { request } = require("undici");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("st")
+    .setDescription("Siren Tool commands")
     .addSubcommand((subcommand) =>
       subcommand
         .setName("role")
@@ -24,6 +25,7 @@ module.exports = {
     .addSubcommandGroup((group) =>
       group
         .setName("forgot")
+        .setDescription("Forgot your email or code?")
         .addSubcommand((subcommand) =>
           subcommand
             .setName("email")
