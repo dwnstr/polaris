@@ -31,10 +31,21 @@ module.exports = {
             .setName("email")
             .setDescription("Use if you forgot your Siren Tool email.")
         )
+        .addSubcommand((subcommand) =>
+          subcommand
+            .setName("code")
+            .setDescription("Use if you forgot your Siren Tool code.")
+            .addUserOption((option) =>
+              option
+                .setName("target")
+                .setDescription("Optional user to target.")
+                .setRequired(false)
+            )
+        )
     ),
 
   async execute(interaction) {
-    console.log(interaction);
+    // console.log(interaction);
     const target = interaction.options.getUser("target");
     const user = interaction.member.user;
     if (interaction.options.getSubcommand() === "role") {
@@ -118,38 +129,60 @@ module.exports = {
         embeds: [embed],
         ephemeral: !target || target.id == user.id,
       });
-    } else if (interaction.options.getSubcommand() === "forgot") {
-      console.log(
-        `${interaction.member.user.username} running /st forgot email.`
-      );
+    } else if (interaction.options.getSubcommandGroup() === "forgot") {
+      console.log(`${interaction.member.user.username} running /st forgot`);
+      if (interaction.options.getSubcommand() === "code") {
+        console.log(
+          `${interaction.member.user.username} running /st forgot code`
+        );
 
-      const { data, error } = await supabase
-        .from("sirenToolOwners")
-        .select("email")
-        .eq("discord_id", user.id)
-        .limit(1);
+        if (target) {
+          return interaction.reply({
+            content: `${target} To recover a Siren Tool code, please visit https://www.dwnstr.com/ and login to view and manage your Siren Tool licenses. 
+            
+If you have already signed up but your code is not showing, you most likely signed up with the wrong Email. Your code is linked to the Email you used with your original purchase. If you forgot which email you used, use \`\`/st forgot email\`\` to see if one is linked to your Discord account.`,
+          });
+        }
 
-      if (error) {
-        console.error("Error finding email by Discord ID", error);
         return interaction.reply({
-          content: `Error fetching data: ${error.message}`,
+          content: `To recover your Siren Tool code, please visit https://www.dwnstr.com/ and login to view and manage your Siren Tool licenses. 
+          
+If you have already signed up but your code is not showing, you most likely signed up with the wrong Email. Your code is linked to the Email you used with your original purchase. If you forgot which email you used, use \`\`/st forgot email\`\` to see if one is linked to your Discord account.`,
           ephemeral: true,
         });
-      }
+      } else if (interaction.options.getSubcommand() === "email") {
+        console.log(
+          `${interaction.member.user.username} running /st forgot email`
+        );
 
-      if (data.length === 0) {
-        return interaction.reply({
-          content: `Couldn't find a Siren Tool email linked to your Discord account.`,
-          ephemeral: true,
-        });
-      }
+        const { data, error } = await supabase
+          .from("sirenToolOwners")
+          .select("email")
+          .eq("discord_id", user.id)
+          .limit(1);
 
-      if (data.length > 0) {
-        const email = data[0].email;
-        return interaction.reply({
-          content: `Your Siren Tool email is: ${email}`,
-          ephemeral: true,
-        });
+        if (error) {
+          console.error("Error finding email by Discord ID", error);
+          return interaction.reply({
+            content: `Error fetching data: ${error.message}`,
+            ephemeral: true,
+          });
+        }
+
+        if (data.length === 0) {
+          return interaction.reply({
+            content: `Couldn't find a Siren Tool email linked to your Discord account.`,
+            ephemeral: true,
+          });
+        }
+
+        if (data.length > 0) {
+          const email = data[0].email;
+          return interaction.reply({
+            content: `The Siren Tool Email linked to your Discord account is: \`\`\`${email}\`\`\``,
+            ephemeral: true,
+          });
+        }
       }
     }
   },
