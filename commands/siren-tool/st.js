@@ -21,8 +21,8 @@ module.exports = {
             .setRequired(false)
         )
     )
-    .addSubcommand((subcommand) =>
-      subcommand
+    .addSubcommandGroup((group) =>
+      group
         .setName("forgot")
         .addSubcommand((subcommand) =>
           subcommand
