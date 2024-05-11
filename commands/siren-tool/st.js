@@ -34,6 +34,7 @@ module.exports = {
     ),
 
   async execute(interaction) {
+    console.log(interaction);
     const target = interaction.options.getUser("target");
     const user = interaction.member.user;
     if (interaction.options.getSubcommand() === "role") {
