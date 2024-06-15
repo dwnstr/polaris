@@ -9,7 +9,8 @@
   "private": false,
   "dependencies": {
     "@supabase/supabase-js": "^2.41.1",
-    "discord.js": "^14.14.1",
+    "discord.js": "^14.15.3",
+    "openai": "^4.51.0",
     "undici": "^6.10.2"
   }
 }

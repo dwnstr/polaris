@@ -1,4 +1,12 @@
-const { Events, EmbedBuilder } = require("discord.js");
+const {
+  CheckThread,
+  AddMessageToThread,
+  CreateRun,
+  RunStatusCheckLoop,
+  GetResponse,
+} = require("../helpers/openai-helpers.js");
+
+const { Events, EmbedBuilder, ChannelType } = require("discord.js");
 
 let winningMember;
 let winningMessage;
@@ -41,15 +49,50 @@ module.exports = {
             console.log("Old winning message no longer exists");
           }
         }
-      } catch (error) {
-        console.error(error);
-      }
 
-      winningMember = guildMember;
-      winningMessage = message;
-      //console.log(winningMember, winningMember.roles)
-      winningMember.roles.add("1083964151723982969");
-      winReaction = await winningMessage.react("🎉");
+        winningMember = guildMember;
+        winningMessage = message;
+        //console.log(winningMember, winningMember.roles)
+        winningMember.roles.add("1083964151723982969");
+        winReaction = await winningMessage.react("🎉");
+      } catch (error) {
+        console.error("Error setting winner:", error);
+      }
+    }
+
+    // AI ASSISTANT
+    // get the channel id (we are only allowing use in discord threads)
+    try {
+      if (channel.parentId === "1251345480005193728") {
+        const messages = await channel.messages.fetch({ limit: 2 });
+        if (
+          (messages.size > 1) &
+          !message.mentions.users.some(
+            (user) => user.id === "1044597619994935307"
+          )
+        ) {
+          console.log("Ignoring message.");
+          return;
+        }
+
+        // console.log(
+        //   `Message sent in gpt-help forum: channel: ${channelId}`
+        // );
+        // check if the forum post (channelId) exists in the map with an associated thread id
+        const threadId = await CheckThread(channelId);
+        console.log(threadId);
+        // add message to thread
+        await AddMessageToThread(threadId, message);
+        // create run
+        const run = await CreateRun(threadId);
+        // get response
+        channel.sendTyping();
+        const response = await GetResponse(threadId, run.id);
+        console.log("Response: ", response.text.annotations);
+        message.reply(response.text.value);
+      }
+    } catch (error) {
+      console.error("AI Assistant error:", error);
     }
   },
 };
