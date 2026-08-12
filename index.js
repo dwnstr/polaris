@@ -1,12 +1,19 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
-const { token, SUPABASE_URL, SUPABASE_KEY } = require("./config.json");
 
 const { createClient } = require("@supabase/supabase-js");
 
-const supabaseUrl = SUPABASE_URL;
-const supabaseKey = SUPABASE_KEY;
+// Pull variables from environment
+const token = process.env.token;
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+
+// Validate required env vars
+if (!token) throw new Error("Missing token environment variable");
+if (!supabaseUrl) throw new Error("Missing SUPABASE_URL environment variable");
+if (!supabaseKey) throw new Error("Missing SUPABASE_KEY environment variable");
+
 global.supabase = createClient(supabaseUrl, supabaseKey);
 
 // Create a new client instance
@@ -57,3 +64,4 @@ for (const file of eventFiles) {
 }
 
 client.login(token);
+
