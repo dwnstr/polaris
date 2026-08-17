@@ -1,6 +1,9 @@
+require("dotenv").config();
+
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const { createCryptoSpamAutomod } = require("./lib/crypto-spam-automod");
 
 const { createClient } = require("@supabase/supabase-js");
 
@@ -8,11 +11,15 @@ const { createClient } = require("@supabase/supabase-js");
 const token = process.env.token;
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
+const moderationWebhookUrl = process.env.DISCORD_MOD_WEBHOOK_URL;
 
 // Validate required env vars
 if (!token) throw new Error("Missing token environment variable");
 if (!supabaseUrl) throw new Error("Missing SUPABASE_URL environment variable");
 if (!supabaseKey) throw new Error("Missing SUPABASE_KEY environment variable");
+if (!moderationWebhookUrl) {
+  throw new Error("Missing DISCORD_MOD_WEBHOOK_URL environment variable");
+}
 
 global.supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -27,6 +34,9 @@ global.client = new Client({
 });
 
 client.commands = new Collection();
+client.cryptoSpamAutomod = createCryptoSpamAutomod({
+  webhookUrl: moderationWebhookUrl,
+});
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
@@ -64,4 +74,3 @@ for (const file of eventFiles) {
 }
 
 client.login(token);
-

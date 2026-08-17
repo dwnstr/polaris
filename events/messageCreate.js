@@ -8,7 +8,13 @@ module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
     if (message.author.bot) return;
-    if (message.channel.type === "dm") return;
+    if (!message.inGuild()) return;
+
+    try {
+      await message.client.cryptoSpamAutomod.handleMessage(message);
+    } catch (error) {
+      console.error("Crypto spam automod failed to process a message", error);
+    }
 
     const member = message.author;
     const guildMember = message.member;
